@@ -20,9 +20,11 @@ class TraitResource(resources.ModelResource):
 
 	class Meta:
 		model = Trait
-		skip_unchanged = TraitResource
+		skip_unchanged = True
 		report_skipped = False
 		fields = ('id', 'genus', 'species', 'ISI', 'fruit_type',)
+
+#admin.site.register(TraitResource)
 
 
 #class TraitAdmin(ImportExportModelAdmin):
