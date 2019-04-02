@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'Traitable',
     'import_export',
+    'crispy_forms',
 ]
 
 IMPORT_EXPORT_USE_TRANSACTIONS = True
