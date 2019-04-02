@@ -20,6 +20,7 @@ class TraitResource(resources.ModelResource):
 
 	class Meta:
 		model = Trait
+		fields = ('id', 'genus', 'species', 'ISI', 'fruit_type',)
 
 #class TraitAdmin(ImportExportModelAdmin):
 	#list_display = ('id', 'genus', 'species', 'isi', 'fruit_type')
