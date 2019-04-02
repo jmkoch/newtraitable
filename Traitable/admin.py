@@ -1,6 +1,7 @@
 from django.contrib import admin
 from .models import Trait, Pub
 from import_export.admin import ImportExportModelAdmin
+from import_export import resources
 #from .forms import TraitForm
 #from .resources import TraitResource
 
@@ -14,6 +15,11 @@ class PubAdmin(admin.ModelAdmin):
 
 admin.site.register(Trait)
 admin.site.register(Pub, PubAdmin)
+
+class TraitResource(resources.ModelResource):
+
+	class Meta:
+		model = Trait
 
 #class TraitAdmin(ImportExportModelAdmin):
 	#list_display = ('id', 'genus', 'species', 'isi', 'fruit_type')
