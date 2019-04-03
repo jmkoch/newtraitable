@@ -4,20 +4,19 @@ from import_export.admin import ImportExportModelAdmin
 from .resources import TraitResource
 from .forms import TraitForm
 
+class TraitAdmin(ImportExportModelAdmin):
+	list_display = ('id', 'genus', 'species', 'isi', 'fruit_type')
+	form = TraitForm
+	resource_class = TraitResource
+#	pass
+
 class TraitInline(admin.TabularInline):
 	model = Trait
 
-class PubAdmin(admin.ModelAdmin):
+class PubAdmin(ImportExportModelAdmin):
 	inlines = [
 		TraitInline,
 	]
 
 admin.site.register(Trait)
 admin.site.register(Pub, PubAdmin)
-
-
-class TraitAdmin(ImportExportModelAdmin):
-	list_display = ('id', 'genus', 'species', 'isi', 'fruit_type')
-	form = TraitForm
-	resource_class = TraitResource
-#	pass
