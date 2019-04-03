@@ -1,9 +1,8 @@
 from django.contrib import admin
 from .models import Trait, Pub
 from import_export.admin import ImportExportModelAdmin
-from import_export import resources
-#from .forms import TraitForm
-#from .resources import TraitResource
+from .resources import TraitResource
+from .forms import TraitForm
 
 class TraitInline(admin.TabularInline):
 	model = Trait
@@ -19,8 +18,8 @@ admin.site.register(Pub, PubAdmin)
 #admin.site.register(TraitResource)
 
 
-#class TraitAdmin(ImportExportModelAdmin):
-	#list_display = ('id', 'genus', 'species', 'isi', 'fruit_type')
-	#form = TraitForm
-	#resource_class = TraitResource
+class TraitAdmin(ImportExportModelAdmin):
+	list_display = ('id', 'genus', 'species', 'isi', 'fruit_type')
+	form = TraitForm
+	resource_class = TraitResource
 #	pass
