@@ -1,8 +1,5 @@
 from django import forms
-from Traitable.models import Trait
-
-#from crispy_forms.helper import FormHelper
-#from crispy_forms.layout import Submit
+from .models import Trait, Pub
 
 class TraitForm(forms.ModelForm):
     class Meta:
