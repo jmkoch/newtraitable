@@ -1,6 +1,6 @@
 from django.db import models
 from django.conf import settings
-#from django.utils import timezone
+from django.utils import timezone
 import csv
 from django.core.validators import MinValueValidator, MaxValueValidator, RegexValidator
 #from django.contrib.contenttypes.fields import GenericRelation
@@ -34,7 +34,6 @@ class Pub(models.Model):
 
 
 class Trait(models.Model):
-    #citekey = models.ForeignKey(Pub, default = 'koch2012', blank=True, null=True, verbose_name='Publication', on_delete=models.PROTECT, related_name='traitref')
    # author = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     pub_reference = models.ForeignKey(Pub, blank=True, null=True, on_delete=models.PROTECT, verbose_name='citekey')
     genus = models.CharField(max_length=50, null=True, blank=True, validators=[val_alpha])#help_text= 'Enter data if known. Expects str as input')
