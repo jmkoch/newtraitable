@@ -15,8 +15,6 @@ class PubAdmin(admin.ModelAdmin):
 admin.site.register(Trait)
 admin.site.register(Pub, PubAdmin)
 
-#admin.site.register(TraitResource)
-
 
 class TraitAdmin(ImportExportModelAdmin):
 	list_display = ('id', 'genus', 'species', 'isi', 'fruit_type')
