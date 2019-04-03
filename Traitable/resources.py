@@ -18,11 +18,31 @@ class TraitResource(resources.ModelResource):
 	def dehydrate_full_title(self, Trait):
 		return '%s genus %s species' (Trait.genus, Trait.species)
 
-#admin.site.register(TraitResource)
+# before importing csv, this checks for a blank 'id' col. This adds 'id' col if not present
+    def before_import(self, dataset, using_transactions, dry_run=True, collect_failed_rows=False, **kwargs): #raise_errors=True
+        if 'id' not in dataset.headers:
+            dataset.insert_col(0, lambda row: "", header='id')
+        
+        print('Here are the columns you will import:' )
+        print(dataset.headers)
 
 
-#class TraitAdmin(ImportExportModelAdmin):
-	#list_display = ('id', 'genus', 'species', 'isi', 'fruit_type')
-	#form = TraitForm
-	#resource_class = TraitResource
+    def export_traits_csv(request):
+        response = HttpResponse(content_type='text/csv')
+        response['Content-Disposition'] = 'attachment; filename="traits_output.csv"'
+
+        writer = csv.writer(response)
+        writer.writerow(['id', 'genus', 'species', 'isi', 'fruit type'])
+
+        traits = Trait.objects.all().values_list('id', 'genus', 'species', 'isi', 'fruit_type')
+	    
+        for trait in traits:
+            writer.writerow(trait)
+
+        return response
+
+class TraitAdmin(ImportExportModelAdmin):
+	list_display = ('genus', 'species', 'isi', 'fruit_type')
+	form = TraitForm
+	resource_class = TraitResource
 #	pass
