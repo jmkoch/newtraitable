@@ -16,17 +16,6 @@ class PubAdmin(admin.ModelAdmin):
 admin.site.register(Trait)
 admin.site.register(Pub, PubAdmin)
 
-class TraitResource(resources.ModelResource):
-
-	class Meta:
-		model = Trait
-		skip_unchanged = True
-		report_skipped = False
-		fields = ('id', 'genus', 'species', 'ISI', 'fruit_type',)
-
-	def dehydrate_full_title(self, trait):
-		return '%s by %s' (trait.genus, trait.species)
-
 #admin.site.register(TraitResource)
 
 
