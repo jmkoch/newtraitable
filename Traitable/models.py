@@ -4,11 +4,13 @@ from django.utils import timezone
 import csv
 from django.core.validators import MinValueValidator, MaxValueValidator, RegexValidator
 
+# some validator declarations that I use within the Pub & Trait models
 val_alphanumeric = RegexValidator(r'^[0-9a-zA-Z]*$', 'Error: only alphanumeric characters are allowed.')
 val_alpha = RegexValidator(r'^[a-zA-Z]*$', 'Error: only alphabetic characters are allowed.')
 val_numeric = RegexValidator(r'^[0-9]*$', 'Error: only numeric characters are allowed.')
 # add in hyphens to names
 
+# Pub model below; all Pub-related variables declared within it
 class Pub(models.Model):
     title = models.CharField(max_length=100, null=True, blank=True, verbose_name='Publication name')
     lastName = models.CharField(max_length=50, null=True, blank=True, validators=[val_alpha], verbose_name = "Author's last name")
@@ -19,11 +21,9 @@ class Pub(models.Model):
     PUB_TYPE_CHOICES = (('article', 'article'), ('book','book'))
     pub_type = models.CharField(max_length=50, null=True, blank=True, choices=PUB_TYPE_CHOICES)
 
-
     class Meta:
         #Gives the proper plural name for admin
         verbose_name_plural = "Pubs"
-
 
     def __unicode__(self):
         return self.citekey
@@ -31,7 +31,7 @@ class Pub(models.Model):
     def __str__(self):
         return self.citekey
 
-
+# Trait model below; all Trait-related variables declared within it
 class Trait(models.Model):
    # author = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     pub_reference = models.ForeignKey(Pub, blank=True, null=True, on_delete=models.PROTECT, verbose_name='citekey')
@@ -41,13 +41,16 @@ class Trait(models.Model):
     
     FRUIT_TYPE_CHOICES = (('capsule','capsule'), ('CAPSULE', 'CAPSULE'), ('Capsule', 'Capsule'),('berry','berry'), ('Berry', 'Berry'), ('BERRY', 'BERRY')) # check why need doubles 
     fruit_type = models.CharField(max_length=50, null=True, blank=True, default='none', choices=FRUIT_TYPE_CHOICES)
-
+    
+    #the following 2 variables will show on admin page a date/time stamp when a Trait was added to the database.
     #created_date = models.DateTimeField(default=timezone.now)
     #published_date = models.DateTimeField(blank=True, null=True)
+
+    class Meta:
+        verbose_name_plural = "Traits"
+
     def __unicode__(self):
         return self.pub_reference
 
     def __str__(self):
        return (str(self.genus)+' '+str(self.species))
-    class Meta:
-        verbose_name_plural = "Traits"
