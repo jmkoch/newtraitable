@@ -3,7 +3,50 @@ from .models import Trait, Pub
 from import_export.admin import ImportExportModelAdmin
 from import_export import resources
 from import_export.fields import Field
-from .forms import TraitForm
+from .forms import TraitForm, PubForm
+
+class PubResource(resources.ModelResource):
+	full_pub = Field()
+
+	class Meta:
+		model = Pub
+		skip_unchanged = True
+		report_skipped = False
+		fields = ['title', 'lastName', 'middleName', 'firstName', 'citekey', 'pub_type']
+		export_order = ['title', 'lastName', 'middleName', 'firstName', 'citekey', 'pub_type']
+
+	def dehydrate_full_pub(self, Pub):
+		return '%s gen %s spec' % (Pub.genus, Pub.species)
+
+	def before_import(self, dataset, using_transactions, dry_run=True, collect_failed_rows=False, **kwargs):
+		if 'id' not in dataset.headers:
+			dataset.insert_col(0, lambda row: "", header='id')
+
+		print('Here are the columns you will import: ')
+		print(dataset.headers)
+
+	def before_save_instance(self, instance, using_transactions, dry_run):
+		instance.full_clean()
+
+	def export_pubs_csv(request):
+		response = HttpResponse(content_type='text/csv')
+		response['Content-Disposition'] = 'attachmnet; filename = "pubs_output.csv"'
+
+		writer = csv.writer(response)
+		writer.writerow(['title', 'lastName', 'middleName', 'firstName', 'citekey', 'pub_type'])
+
+		pubs = Pub.objects.all().values_list('title', 'lastName', 'middleName', 'firstName', 'citekey', 'pub_type')
+
+		for pub in pubs:
+			writer.writerow(pub)
+
+		return response
+
+class PubAdmin(ImportExportModelAdmin):
+	list_display = ('title', 'lastName', 'middleName', 'firstName', 'citekey', 'pub_type')
+	form = PubForm
+	resource_class = PubResource
+
 
 class TraitResource(resources.ModelResource):
     full_trait = Field()
