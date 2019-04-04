@@ -50,11 +50,6 @@ class PubResource(resources.ModelResource):
 
 		return response
 
-class PubAdmin(ImportExportModelAdmin):
-	list_display = ('title', 'lastName', 'middleName', 'firstName', 'citekey', 'pub_type')
-	form = PubForm
-	resource_class = PubResource
-
 
 class TraitResource(resources.ModelResource):
     full_trait = Field()
@@ -90,9 +85,3 @@ class TraitResource(resources.ModelResource):
             writer.writerow(trait)
 
         return response
-
-class TraitAdmin(ImportExportModelAdmin):
-	list_display = ('genus', 'species', 'isi', 'fruit_type')
-	form = TraitForm
-	resource_class = TraitResource
-#	pass
