@@ -55,8 +55,8 @@ class TraitResource(resources.ModelResource):
         model = Trait
         skip_unchanged = True
         report_skipped = False
-        fields = ['id', 'genus', 'species', 'ISI', 'fruit_type',]
-        export_order = ['id', 'genus', 'species', 'ISI', 'fruit_type',]
+        fields = ['id', 'genus', 'species', 'isi', 'fruit_type',]
+        export_order = ['id', 'genus', 'species', 'isi', 'fruit_type',]
 
     def dehydrate_full_title(self, Trait):
         return '%s genus %s species' (Trait.genus, Trait.species)
