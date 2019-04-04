@@ -18,6 +18,7 @@ class Pub(models.Model):
     firstName = models.CharField(max_length=50, null=True, blank=True, validators=[val_alpha], verbose_name = "Author's first name")
     citekey = models.CharField(max_length=50, unique=True, null=True, validators=[val_alphanumeric]) #null=True, blank=False
     
+    # for variables with multiple options, must define said options on one line (in pairs, as below) and the variable on separate line
     PUB_TYPE_CHOICES = (('article', 'article'), ('book','book'))
     pub_type = models.CharField(max_length=50, null=True, blank=True, choices=PUB_TYPE_CHOICES)
 
@@ -41,7 +42,7 @@ class Trait(models.Model):
     
     FRUIT_TYPE_CHOICES = (('capsule','capsule'), ('CAPSULE', 'CAPSULE'), ('Capsule', 'Capsule'),('berry','berry'), ('Berry', 'Berry'), ('BERRY', 'BERRY')) # check why need doubles 
     fruit_type = models.CharField(max_length=50, null=True, blank=True, default='none', choices=FRUIT_TYPE_CHOICES)
-    
+
     #the following 2 variables will show on admin page a date/time stamp when a Trait was added to the database.
     #created_date = models.DateTimeField(default=timezone.now)
     #published_date = models.DateTimeField(blank=True, null=True)
