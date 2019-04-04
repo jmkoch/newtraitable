@@ -8,7 +8,6 @@ class TraitAdmin(ImportExportModelAdmin):
 	list_display = ('id', 'genus', 'species', 'isi', 'fruit_type')
 	form = TraitForm
 	resource_class = TraitResource
-#	pass
 
 class TraitInline(admin.TabularInline):
 	model = Trait
@@ -19,7 +18,7 @@ class PubAdmin(ImportExportModelAdmin):
 	resource_class = PubResource
 	#inlines = [
 	#	TraitInline,
-	#]
+	#] # this inline adds Traits to Pub admin page to allow user to upload pub and trait in parallel
 
 class PubInLine(admin.TabularInline):
 	model = Pub
