@@ -50,7 +50,7 @@ class PubResource(resources.ModelResource):
 
 		return response
 
-
+# Trait Resource (for django-import-export)
 class TraitResource(resources.ModelResource):
     full_trait = Field()
 
