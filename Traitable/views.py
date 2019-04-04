@@ -11,7 +11,7 @@ import csv
 
 class PubCreateView(CreateView):
 	model = Pub
-	fields = ('title', 'lastName', 'middleName', 'firstName', 'citekey', 'pub_type')
+	fields = ('id', 'title', 'lastName', 'middleName', 'firstName', 'citekey', 'pub_type')
 
 class TraitCreateView(CreateView):
 	model = Trait
