@@ -12,11 +12,11 @@ class PubResource(resources.ModelResource):
 		model = Pub
 		skip_unchanged = True
 		report_skipped = False
-		fields = ['title', 'lastName', 'middleName', 'firstName', 'citekey', 'pub_type']
-		export_order = ['title', 'lastName', 'middleName', 'firstName', 'citekey', 'pub_type']
+		fields = ['id', 'title', 'lastName', 'middleName', 'firstName', 'citekey', 'pub_type']
+		export_order = ['id', 'title', 'lastName', 'middleName', 'firstName', 'citekey', 'pub_type']
 
 	def dehydrate_full_pub(self, Pub):
-		return '%s gen %s spec' % (Pub.genus, Pub.species)
+		return '%s lastName %s firstName' % (Pub.lastName, Pub.firstName)
 
 	def before_import(self, dataset, using_transactions, dry_run=True, collect_failed_rows=False, **kwargs):
 		if 'id' not in dataset.headers:
@@ -33,9 +33,9 @@ class PubResource(resources.ModelResource):
 		response['Content-Disposition'] = 'attachmnet; filename = "pubs_output.csv"'
 
 		writer = csv.writer(response)
-		writer.writerow(['title', 'lastName', 'middleName', 'firstName', 'citekey', 'pub_type'])
+		writer.writerow(['id', 'title', 'lastName', 'middleName', 'firstName', 'citekey', 'pub_type'])
 
-		pubs = Pub.objects.all().values_list('title', 'lastName', 'middleName', 'firstName', 'citekey', 'pub_type')
+		pubs = Pub.objects.all().values_list('id', 'title', 'lastName', 'middleName', 'firstName', 'citekey', 'pub_type')
 
 		for pub in pubs:
 			writer.writerow(pub)
