@@ -3,7 +3,6 @@ from django.conf import settings
 from django.utils import timezone
 import csv
 from django.core.validators import MinValueValidator, MaxValueValidator, RegexValidator
-#from django.contrib.contenttypes.fields import GenericRelation
 
 val_alphanumeric = RegexValidator(r'^[0-9a-zA-Z]*$', 'Error: only alphanumeric characters are allowed.')
 val_alpha = RegexValidator(r'^[a-zA-Z]*$', 'Error: only alphabetic characters are allowed.')
@@ -50,5 +49,5 @@ class Trait(models.Model):
 
     def __str__(self):
        return (str(self.genus)+' '+str(self.species))
-   # class Meta:
-    #    verbose_name_plural = "Traits"
+    class Meta:
+        verbose_name_plural = "Traits"
