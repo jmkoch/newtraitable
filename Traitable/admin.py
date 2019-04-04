@@ -4,6 +4,7 @@ from import_export.admin import ImportExportModelAdmin
 from .resources import TraitResource, PubResource
 from .forms import TraitForm, PubForm
 
+# defining TraitAdmin class (useful & necessary for django-import-export module)
 class TraitAdmin(ImportExportModelAdmin):
 	list_display = ('id', 'genus', 'species', 'isi', 'fruit_type')
 	form = TraitForm
@@ -12,6 +13,7 @@ class TraitAdmin(ImportExportModelAdmin):
 class TraitInline(admin.TabularInline):
 	model = Trait
 
+# defining PubAdmin class (useful & necessary for django-import-export module)
 class PubAdmin(ImportExportModelAdmin):
 	list_display = ('id', 'title', 'lastName', 'middleName', 'firstName', 'citekey', 'pub_type')
 	form = PubForm
@@ -23,5 +25,6 @@ class PubAdmin(ImportExportModelAdmin):
 class PubInLine(admin.TabularInline):
 	model = Pub
 
+# registering our models - very important step!! if you forget to register a model, it won't show up on admin page.
 admin.site.register(Trait, TraitAdmin)
 admin.site.register(Pub, PubAdmin)
