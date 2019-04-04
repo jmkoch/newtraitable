@@ -5,19 +5,25 @@ from import_export import resources
 from import_export.fields import Field
 from .forms import TraitForm, PubForm
 
+# declaring Pub Resource below (resources are required & helpful for django-import-export module)
+# when declaring a model's resource, follow this general setup:
+# define class name with parameters (resources.ModelResource):
+# then have a line with full_modelName = Field()
+# then within the Meta class state the model, the fields to be printed, and the order in which they'll be printed
 class PubResource(resources.ModelResource):
 	full_pub = Field()
 
 	class Meta:
 		model = Pub
-		skip_unchanged = True
-		report_skipped = False
+		skip_unchanged = True  #optional variable that will skip unchanged data imports
+		report_skipped = False #optional variable that will not report skipped imports
 		fields = ['id', 'title', 'lastName', 'middleName', 'firstName', 'citekey', 'pub_type']
 		export_order = ['id', 'title', 'lastName', 'middleName', 'firstName', 'citekey', 'pub_type']
 
 	def dehydrate_full_pub(self, Pub):
 		return '%s lastName %s firstName' % (Pub.lastName, Pub.firstName)
 
+	# The before_import function will pass some tests prior to importing the data.
 	def before_import(self, dataset, using_transactions, dry_run=True, collect_failed_rows=False, **kwargs):
 		if 'id' not in dataset.headers:
 			dataset.insert_col(0, lambda row: "", header='id')
@@ -25,9 +31,11 @@ class PubResource(resources.ModelResource):
 		print('Here are the columns you will import: ')
 		print(dataset.headers)
 
+	# Here we will do a simple full_clean of our data before saving it to the database
 	def before_save_instance(self, instance, using_transactions, dry_run):
 		instance.full_clean()
 
+	# function to export a csv containing all pub data entries
 	def export_pubs_csv(request):
 		response = HttpResponse(content_type='text/csv')
 		response['Content-Disposition'] = 'attachmnet; filename = "pubs_output.csv"'
@@ -61,14 +69,14 @@ class TraitResource(resources.ModelResource):
     def dehydrate_full_title(self, Trait):
         return '%s genus %s species' (Trait.genus, Trait.species)
 
-# before importing csv, this checks for a blank 'id' col. This adds 'id' col if not present
+	# before importing csv, this checks for a blank 'id' col. This adds 'id' col if not present
     def before_import(self, dataset, using_transactions, dry_run=True, collect_failed_rows=False, **kwargs): #raise_errors=True
         if 'id' not in dataset.headers:
             dataset.insert_col(0, lambda row: "", header='id')
         print('Here are the columns you will import:' )
         print(dataset.headers)
 
-
+    # function to export all trait entries into a csv
     def export_traits_csv(request):
         response = HttpResponse(content_type='text/csv')
         response['Content-Disposition'] = 'attachment; filename="traits_output.csv"'
