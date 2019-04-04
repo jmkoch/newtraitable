@@ -9,10 +9,13 @@ from tablib import Dataset
 from django.contrib.auth.models import User
 import csv
 
+# for django-import-export, we need to write a view for every model we're using. 
+# Here's the Pub view
 class PubCreateView(CreateView):
 	model = Pub
 	fields = ('id', 'title', 'lastName', 'middleName', 'firstName', 'citekey', 'pub_type')
 
+# Trait view
 class TraitCreateView(CreateView):
 	model = Trait
 	fields = ('id', 'genus', 'species', 'isi', 'fruit_type')
