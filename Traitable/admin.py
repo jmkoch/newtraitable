@@ -14,12 +14,15 @@ class TraitInline(admin.TabularInline):
 	model = Trait
 
 class PubAdmin(ImportExportModelAdmin):
-	list_display = ('title', 'lastName', 'middleName', 'firstName', 'citekey', 'pub_type')
+	list_display = ('id', 'title', 'lastName', 'middleName', 'firstName', 'citekey', 'pub_type')
 	form = PubForm
 	resource_class = PubResource
-	inlines = [
-		TraitInline,
-	]
+	#inlines = [
+	#	TraitInline,
+	#]
 
-admin.site.register(Trait)
+class PubInLine(admin.TabularInline):
+	model = Pub
+
+admin.site.register(Trait, TraitAdmin)
 admin.site.register(Pub, PubAdmin)
