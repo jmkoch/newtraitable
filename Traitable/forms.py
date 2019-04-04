@@ -1,6 +1,8 @@
 from django import forms
 from .models import Trait, Pub
 
+# to use django-import-export, you need a form for every model you're using. 
+# Here's the Trait Form
 class TraitForm(forms.ModelForm):
     class Meta:
         model = Trait
@@ -14,6 +16,7 @@ class TraitForm(forms.ModelForm):
             raise forms.ValidationError("ISI must be between 0.0 and 1.0")
         return self.cleaned_data
 
+# Here's the Pub Form
 class PubForm(forms.ModelForm):
 	class Meta:
 		model = Pub
