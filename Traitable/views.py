@@ -4,15 +4,19 @@ from .models import Trait, Pub
 from django.shortcuts import render, get_object_or_404, redirect
 from django.utils import timezone
 from django.http import HttpResponse
-from .resources import TraitResource
+from .resources import TraitResource, PubResource
 from tablib import Dataset
 from django.contrib.auth.models import User
 import csv
 
+class PubCreateView(CreateView):
+	model = Pub
+	fields = ('title', 'lastName', 'middleName', 'firstName', 'citekey', 'pub_type')
+
 class TraitCreateView(CreateView):
 	model = Trait
 	fields = ('id', 'genus', 'species', 'isi', 'fruit_type')
-
+'''
 def export_traits_csv(request):
 	response = HttpResponse(content_type = 'text/csv')
 	response['Content-Disposition'] = 'attachment; filename="traits_output.csv"'
@@ -26,3 +30,4 @@ def export_traits_csv(request):
 		writer.writerow(trait)
 
 	return response
+	'''
