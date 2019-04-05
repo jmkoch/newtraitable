@@ -15,8 +15,8 @@ class PubResource(resources.ModelResource):
 
 	class Meta:
 		model = Pub
-		skip_unchanged = True  #optional variable that will skip unchanged data imports
-		report_skipped = True #optional variable that will not report skipped imports
+		skip_unchanged = True  #optional variable that will skip unchanged data imports; DOESNT WORK!!!!
+		report_skipped = True #optional variable that will not report skipped imports; DOESNT WORK!!! 
 		fields = ['id', 'title', 'lastName', 'middleName', 'firstName', 'citekey', 'pub_type']
 		export_order = ['id', 'title', 'lastName', 'middleName', 'firstName', 'citekey', 'pub_type']
 
