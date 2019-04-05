@@ -16,7 +16,7 @@ class PubResource(resources.ModelResource):
 	class Meta:
 		model = Pub
 		skip_unchanged = True  #optional variable that will skip unchanged data imports
-		report_skipped = False #optional variable that will not report skipped imports
+		report_skipped = True #optional variable that will not report skipped imports
 		fields = ['id', 'title', 'lastName', 'middleName', 'firstName', 'citekey', 'pub_type']
 		export_order = ['id', 'title', 'lastName', 'middleName', 'firstName', 'citekey', 'pub_type']
 
@@ -68,6 +68,13 @@ class TraitResource(resources.ModelResource):
     def before_import(self, dataset, using_transactions, dry_run=True, collect_failed_rows=False, **kwargs): #raise_errors=True
         if 'id' not in dataset.headers:
             dataset.insert_col(0, lambda row: "", header='id')
+        
+        fields = ['id', 'genus', 'species', 'isi', 'fruit_type',]
+
+# need to fix this; doesn't break but doesn't work; still prints 'Here are the columns you'll import:' and includes bad column (but dosn't upload it)
+        for i in fields:
+        	if i not in fields:
+        		print('We found unrecognized/unexpected data in your csv. Skipping column: '+ str(col_name))
         print('Here are the columns you will import:' )
         print(dataset.headers)
 
