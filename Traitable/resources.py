@@ -13,10 +13,6 @@ from .forms import TraitForm, PubForm
 # then have a line with full_modelName = Field()
 # then within the Meta class state the model, the fields to be printed, and the order in which they'll be printed
 class PubResource(resources.ModelResource):
-	#full_pub = Field()
-	#full_pub = fields.Field(column_name='citekey', attribute='citekey',
-		#widget=ForeignKeyWidget(Pub, 'citekey'))
-	citekey = fields.Field(column_name = 'citekey', attribute = 'citekey', widget=widgets.ForeignKeyWidget(Pub, 'citekey'))
 
 	class Meta:
 		model = Pub
@@ -66,7 +62,11 @@ class PubResource(resources.ModelResource):
 
 # Trait Resource (for django-import-export)
 class TraitResource(resources.ModelResource):
-    #full_trait = Field()
+    full_trait = fields.Field(
+    	column_name = 'pub_reference',
+    	attribute = 'pub_reference',
+    	widget = ForeignKeyWidget(Pub, 'citekey')
+    )
 
    # pub_reference = fields.Field(column_name = 'pub_reference', attribute = 'pub_reference', widget=widgets.ForeignKeyWidget(Pub, 'citekey'))
 
