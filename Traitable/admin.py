@@ -6,7 +6,7 @@ from .forms import TraitForm, PubForm
 
 # defining TraitAdmin class (useful & necessary for django-import-export module)
 class TraitAdmin(ImportExportModelAdmin):
-	list_display = ('id', 'genus', 'species', 'isi', 'fruit_type')
+	list_display = ('id', 'genus', 'species', 'isi', 'fruit_type', 'pub_reference')
 	form = TraitForm
 	resource_class = TraitResource
 
