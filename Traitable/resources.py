@@ -1,4 +1,5 @@
 from django.contrib import admin
+from django.shortcuts import get_object_or_404
 from .models import Trait, Pub
 from import_export.admin import ImportExportModelAdmin
 from import_export import resources, fields, widgets
@@ -12,10 +13,10 @@ from .forms import TraitForm, PubForm
 # then have a line with full_modelName = Field()
 # then within the Meta class state the model, the fields to be printed, and the order in which they'll be printed
 class PubResource(resources.ModelResource):
-	full_pub = Field()
+	#full_pub = Field()
 	#full_pub = fields.Field(column_name='citekey', attribute='citekey',
 		#widget=ForeignKeyWidget(Pub, 'citekey'))
-	citekey = fields.Field(column_name = 'citekey', attribute = 'Pub', widget=widgets.ForeignKeyWidget(Pub, 'citekey'))
+	citekey = fields.Field(column_name = 'citekey', attribute = 'citekey', widget=widgets.ForeignKeyWidget(Pub, 'citekey'))
 
 	class Meta:
 		model = Pub
@@ -28,7 +29,7 @@ class PubResource(resources.ModelResource):
 		return '%s lastName %s firstName' % (Pub.lastName, Pub.firstName)
 
 	#def dehydrate_citekey(self, Pub):
-	#	return Pub.citekey.citekey
+	#	return Pub.citekey
 
 	# The before_import function will pass some tests prior to importing the data.
 	def before_import(self, dataset, using_transactions, dry_run=True, collect_failed_rows=False, **kwargs):
@@ -57,16 +58,21 @@ class PubResource(resources.ModelResource):
 
 		return response
 
+	#def get_object(self, id):
+	#	try:
+	#		return Pub.objects.get(pk=citekey)
+	#	except Pub.DoesNotExist:
+	#		return False
+
 # Trait Resource (for django-import-export)
 class TraitResource(resources.ModelResource):
-    full_trait = Field()
-
+    #full_trait = Field()
     class Meta:
         model = Trait
         skip_unchanged = True
         report_skipped = False
-       # fields = ['id', 'genus', 'species', 'isi', 'fruit_type',]
-       # export_order = ['id', 'genus', 'species', 'isi', 'fruit_type',]
+        fields = ['id', 'genus', 'species', 'isi', 'fruit_type', 'pub_reference']
+        export_order = ['id', 'genus', 'species', 'isi', 'fruit_type', 'pub_reference']
 
     def dehydrate_full_title(self, Trait):
         return '%s genus %s species' (Trait.genus, Trait.species)
@@ -76,7 +82,7 @@ class TraitResource(resources.ModelResource):
         if 'id' not in dataset.headers:
             dataset.insert_col(0, lambda row: "", header='id')
         
-        fields = ['id', 'genus', 'species', 'isi', 'fruit_type',]
+        fields = ['id', 'genus', 'species', 'isi', 'fruit_type', 'pub_reference']
 
 # need to fix this; doesn't break but doesn't work; still prints 'Here are the columns you'll import:' and includes bad column (but dosn't upload it)
         for i in fields:
@@ -91,9 +97,9 @@ class TraitResource(resources.ModelResource):
         response['Content-Disposition'] = 'attachment; filename="traits_output.csv"'
 
         writer = csv.writer(response)
-        writer.writerow(['id', 'genus', 'species', 'isi', 'fruit type'])
+        writer.writerow(['id', 'genus', 'species', 'isi', 'fruit type', 'pub_reference'])
 
-        traits = Trait.objects.all().values_list('id', 'genus', 'species', 'isi', 'fruit_type')
+        traits = Trait.objects.all().values_list('id', 'genus', 'species', 'isi', 'fruit_type', 'pub_reference')
 	    
         for trait in traits:
             writer.writerow(trait)
