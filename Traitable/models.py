@@ -54,5 +54,4 @@ class Trait(models.Model):
         return self.pub_reference
 
     def __str__(self):
-        #return (str(self.genus)+' '+str(self.species))
-        return self.pub_reference
+        return (str(self.genus)+' '+str(self.species))
