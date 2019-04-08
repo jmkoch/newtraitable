@@ -24,9 +24,6 @@ class PubResource(resources.ModelResource):
 	def dehydrate_full_pub(self, Pub):
 		return '%s lastName %s firstName' % (Pub.lastName, Pub.firstName)
 
-	#def dehydrate_citekey(self, Pub):
-	#	return Pub.citekey
-
 	# The before_import function will pass some tests prior to importing the data.
 	def before_import(self, dataset, using_transactions, dry_run=True, collect_failed_rows=False, **kwargs):
 		if 'id' not in dataset.headers:
@@ -38,6 +35,7 @@ class PubResource(resources.ModelResource):
 	# Here we will do a simple full_clean of our data before saving it to the database
 	def before_save_instance(self, instance, using_transactions, dry_run):
 		instance.full_clean()
+
 
 	# function to export a csv containing all pub data entries
 	def export_pubs_csv(request):
@@ -54,15 +52,9 @@ class PubResource(resources.ModelResource):
 
 		return response
 
-	#def get_object(self, id):
-	#	try:
-	#		return Pub.objects.get(pk=citekey)
-	#	except Pub.DoesNotExist:
-	#		return False
-
 # Trait Resource (for django-import-export)
 class TraitResource(resources.ModelResource):
-    full_trait = fields.Field(
+    pub_reference = fields.Field(
     	column_name = 'pub_reference',
     	attribute = 'pub_reference',
     	widget = ForeignKeyWidget(Pub, 'citekey')
@@ -72,10 +64,10 @@ class TraitResource(resources.ModelResource):
 
     class Meta:
         model = Trait
-        skip_unchanged = True
-        report_skipped = False
-        fields = ['id', 'genus', 'species', 'isi', 'fruit_type', 'pub_reference']
-        export_order = ['id', 'genus', 'species', 'isi', 'fruit_type', 'pub_reference']
+        #skip_unchanged = True
+        #report_skipped = False
+        #fields = ['id', 'genus', 'species', 'isi', 'fruit_type', 'pub_reference']
+        #export_order = ['id', 'genus', 'species', 'isi', 'fruit_type', 'pub_reference']
 
     def dehydrate_full_title(self, Trait):
         return '%s genus %s species' (Trait.genus, Trait.species)
@@ -108,3 +100,4 @@ class TraitResource(resources.ModelResource):
             writer.writerow(trait)
 
         return response
+        
