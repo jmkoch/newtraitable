@@ -1,8 +1,9 @@
 from django.contrib import admin
 from .models import Trait, Pub
 from import_export.admin import ImportExportModelAdmin
-from import_export import resources
+from import_export import resources, fields, widgets
 from import_export.fields import Field
+from import_export.widgets import ForeignKeyWidget
 from .forms import TraitForm, PubForm
 
 # declaring Pub Resource below (resources are required & helpful for django-import-export module)
@@ -12,6 +13,9 @@ from .forms import TraitForm, PubForm
 # then within the Meta class state the model, the fields to be printed, and the order in which they'll be printed
 class PubResource(resources.ModelResource):
 	full_pub = Field()
+	#full_pub = fields.Field(column_name='citekey', attribute='citekey',
+		#widget=ForeignKeyWidget(Pub, 'citekey'))
+	citekey = fields.Field(column_name = 'citekey', attribute = 'Pub', widget=widgets.ForeignKeyWidget(Pub, 'citekey'))
 
 	class Meta:
 		model = Pub
@@ -22,6 +26,9 @@ class PubResource(resources.ModelResource):
 
 	def dehydrate_full_pub(self, Pub):
 		return '%s lastName %s firstName' % (Pub.lastName, Pub.firstName)
+
+	#def dehydrate_citekey(self, Pub):
+	#	return Pub.citekey.citekey
 
 	# The before_import function will pass some tests prior to importing the data.
 	def before_import(self, dataset, using_transactions, dry_run=True, collect_failed_rows=False, **kwargs):
@@ -58,8 +65,8 @@ class TraitResource(resources.ModelResource):
         model = Trait
         skip_unchanged = True
         report_skipped = False
-        fields = ['id', 'genus', 'species', 'isi', 'fruit_type',]
-        export_order = ['id', 'genus', 'species', 'isi', 'fruit_type',]
+       # fields = ['id', 'genus', 'species', 'isi', 'fruit_type',]
+       # export_order = ['id', 'genus', 'species', 'isi', 'fruit_type',]
 
     def dehydrate_full_title(self, Trait):
         return '%s genus %s species' (Trait.genus, Trait.species)
