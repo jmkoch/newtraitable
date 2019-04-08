@@ -12,6 +12,7 @@ class TraitForm(forms.ModelForm):
         species = self.cleaned_data.get('species')
         isi = self.cleaned_data.get('isi')
         fruit_type = self.cleaned_data.get('fruit_type')
+        pub_reference = self.cleaned_data.get('citekey')
         if isi > 1.0:
             raise forms.ValidationError("ISI must be between 0.0 and 1.0")
         return self.cleaned_data
