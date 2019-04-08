@@ -36,7 +36,6 @@ class PubResource(resources.ModelResource):
 	def before_save_instance(self, instance, using_transactions, dry_run):
 		instance.full_clean()
 
-
 	# function to export a csv containing all pub data entries
 	def export_pubs_csv(request):
 		response = HttpResponse(content_type='text/csv')
