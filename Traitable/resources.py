@@ -67,6 +67,9 @@ class PubResource(resources.ModelResource):
 # Trait Resource (for django-import-export)
 class TraitResource(resources.ModelResource):
     #full_trait = Field()
+
+   # pub_reference = fields.Field(column_name = 'pub_reference', attribute = 'pub_reference', widget=widgets.ForeignKeyWidget(Pub, 'citekey'))
+
     class Meta:
         model = Trait
         skip_unchanged = True
