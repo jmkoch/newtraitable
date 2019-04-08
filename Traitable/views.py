@@ -18,7 +18,7 @@ class PubCreateView(CreateView):
 # Trait view
 class TraitCreateView(CreateView):
 	model = Trait
-	fields = ('id', 'genus', 'species', 'isi', 'fruit_type')
+	fields = ('id', 'genus', 'species', 'isi', 'fruit_type', 'pub_reference')
 
 
 from tablib import Dataset
