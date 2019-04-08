@@ -35,7 +35,7 @@ class Pub(models.Model):
 # Trait model below; all Trait-related variables declared within it
 class Trait(models.Model):
    # author = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
-    pub_reference = models.ForeignKey(Pub, blank=True, null=True, on_delete=models.PROTECT, verbose_name='citekey')
+    pub_reference = models.ForeignKey(Pub, blank=True, null=True, on_delete=models.PROTECT, verbose_name='citekey', validators=[val_alphanumeric])
     genus = models.CharField(max_length=50, null=True, blank=True, validators=[val_alpha])#help_text= 'Enter data if known. Expects str as input')
     species = models.CharField(max_length=50, null=True, blank=True, validators=[val_alpha])
     isi = models.FloatField(blank=True, null=True, validators=[MinValueValidator(0.0, message='Must be a number between 0.0 and 1.0'), MaxValueValidator(1.0, message='Must be a number between 0.0 and 1.0')], verbose_name='Index of Self-Incompatibility')
@@ -54,4 +54,5 @@ class Trait(models.Model):
         return self.pub_reference
 
     def __str__(self):
-       return (str(self.genus)+' '+str(self.species))
+       #return (str(self.genus)+' '+str(self.species))
+        return self.pub_reference
