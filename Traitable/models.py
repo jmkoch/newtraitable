@@ -50,8 +50,5 @@ class Trait(models.Model):
     class Meta:
         verbose_name_plural = "Traits"
 
-    def __unicode__(self):
-        return self.pub_reference
-
     def __str__(self):
         return (str(self.genus)+' '+str(self.species))
