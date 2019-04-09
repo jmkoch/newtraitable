@@ -64,8 +64,8 @@ class TraitResource(resources.ModelResource):
     class Meta:
         model = Trait
         clean_model_instances = True
-        #skip_unchanged = True
-        #report_skipped = False
+        skip_unchanged = True
+        report_skipped = False
         #fields = ['id', 'genus', 'species', 'isi', 'fruit_type', 'pub_reference']
         #export_order = ['id', 'genus', 'species', 'isi', 'fruit_type', 'pub_reference']
 
