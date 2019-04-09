@@ -16,6 +16,7 @@ class PubResource(resources.ModelResource):
 
 	class Meta:
 		model = Pub
+		clean_model_instances = True
 		skip_unchanged = True  #optional variable that will skip unchanged data imports; DOESNT WORK!!!!
 		report_skipped = True #optional variable that will not report skipped imports; DOESNT WORK!!! 
 		fields = ['id', 'title', 'lastName', 'middleName', 'firstName', 'citekey', 'pub_type']
