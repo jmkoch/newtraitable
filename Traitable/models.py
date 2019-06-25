@@ -11,6 +11,7 @@ val_numeric = RegexValidator(r'^[0-9]*$', 'Error: only numeric characters are al
 # add in hyphens to names
 
 class Pub(models.Model):
+    journal = models.CharField(max_length=100, null=True, blank=True, validators=[val_alphanumeric], verbose_name = "journal name")
     title = models.CharField(max_length=100, null=True, blank=True, verbose_name='Publication name')
     lastName = models.CharField(max_length=50, null=True, blank=True, validators=[val_alpha], verbose_name = "Author's last name")
     middleName = models.CharField(max_length=50, null=True, blank=True, validators=[val_alpha], verbose_name = "Author's middle name")
